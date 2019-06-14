@@ -137,5 +137,17 @@ public class VIPServiceImpl implements VIPService {
         }
     }
 
+    @Override
+    public ResponseVO getTypeById(int id) {
+        try {
+            VIPType vipType = vipTypeMapper.selectTypeById(id);
+            return ResponseVO.buildSuccess(new VIPTypeVO(vipType));
+        }catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("失败");
+        }
+
+    }
+
 
 }

@@ -28,5 +28,7 @@ public interface VIPService {
 
     ResponseVO updateType(VIPTypeForm vipTypeForm);
 
+    ResponseVO getTypeById(int id);
+
 
 }

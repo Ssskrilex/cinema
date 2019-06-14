@@ -118,6 +118,14 @@ public class MovieServiceImpl implements MovieService, MovieServiceForBl {
     }
 
     @Override
+    public ResponseVO deleteMovie(int id) {
+        if(movieMapper.selectMovieById(id)==null){
+            return ResponseVO.buildFailure("不存在该电影");
+        }
+        return ResponseVO.buildSuccess(movieMapper.deleteMovie(id));
+    }
+
+    @Override
     public Movie getMovieById(int id) {
         try {
             return movieMapper.selectMovieById(id);

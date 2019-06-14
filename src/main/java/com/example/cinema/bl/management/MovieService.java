@@ -56,5 +56,12 @@ public interface MovieService {
      * @return
      */
     ResponseVO updateMovie(MovieForm updateMovieForm);
+    /**
+     * 删除电影信息
+     * @param
+     * @return
+     */
+
+    ResponseVO deleteMovie(int id);
 
 }

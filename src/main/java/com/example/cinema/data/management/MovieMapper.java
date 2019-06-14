@@ -68,4 +68,12 @@ public interface MovieMapper {
      * @return
      */
     int updateMovie(MovieForm updateMovieForm);
+
+    /**
+     * 删除电影
+     * @param
+     * @return
+     */
+    int deleteMovie(@Param("id") int id);
+
 }
