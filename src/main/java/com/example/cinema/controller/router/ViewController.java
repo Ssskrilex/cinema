@@ -45,6 +45,16 @@ public class ViewController {
         return "adminCinemaStatistic";
     }
 
+    @RequestMapping(value = "/admin/vip/manage")
+    public String getAdminVipManage(){
+        return "adminVipManage";
+    }
+
+    @RequestMapping(value = "/admin/vipDetail")
+    public String getAdminYipDetail(@RequestParam int id){
+        return "adminVipDetail";
+    }
+
     @RequestMapping(value = "/admin/movieDetail")
     public String getAdminMovieDetail(@RequestParam int id) { return "adminMovieDetail"; }
 
