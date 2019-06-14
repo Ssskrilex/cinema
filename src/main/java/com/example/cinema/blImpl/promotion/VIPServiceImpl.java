@@ -2,12 +2,15 @@ package com.example.cinema.blImpl.promotion;
 
 import com.example.cinema.bl.promotion.VIPService;
 import com.example.cinema.data.promotion.VIPCardMapper;
-import com.example.cinema.vo.VIPCardForm;
+import com.example.cinema.data.promotion.VIPTypeMapper;
+import com.example.cinema.po.VIPType;
+import com.example.cinema.vo.*;
 import com.example.cinema.po.VIPCard;
-import com.example.cinema.vo.ResponseVO;
-import com.example.cinema.vo.VIPInfoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -17,6 +20,8 @@ import org.springframework.stereotype.Service;
 public class VIPServiceImpl implements VIPService {
     @Autowired
     VIPCardMapper vipCardMapper;
+    @Autowired
+    VIPTypeMapper vipTypeMapper;
 
     @Override
     public ResponseVO addVIPCard(int userId) {
@@ -77,6 +82,56 @@ public class VIPServiceImpl implements VIPService {
             }
             return ResponseVO.buildSuccess(vipCard);
         } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("失败");
+        }
+    }
+
+    @Override
+    public ResponseVO getTypes() {
+        try {
+            List<VIPType> types = vipTypeMapper.selectAll();
+            List<VIPTypeVO> result = new ArrayList<>();
+            for (VIPType t : types) {
+                result.add(new VIPTypeVO(t));
+            }
+            return ResponseVO.buildSuccess(result);
+
+        }catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("失败");
+        }
+    }
+
+    @Override
+    public ResponseVO addType(VIPTypeForm vipTypeForm) {
+
+        try {
+            VIPType vipType = new VIPType();
+            vipType.setName(vipTypeForm.getName());
+            vipType.setAmount(vipTypeForm.getAmount());
+            vipType.setDescription(vipTypeForm.getDescription());
+            vipType.setDiscount(vipTypeForm.getDiscount());
+            vipType.setPrice(vipTypeForm.getPrice());
+            int id = vipTypeMapper.insertOneType(vipType);
+            vipType.setId(id);
+            return ResponseVO.buildSuccess(new VIPTypeVO(vipType));
+        }catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("失败");
+        }
+    }
+
+    @Override
+    public ResponseVO updateType(VIPTypeForm vipTypeForm) {
+        try {
+            VIPType vipType = vipTypeMapper.selectTypeById(vipTypeForm.getId());
+            if(vipType==null){
+                return ResponseVO.buildFailure("用户卡不存在");
+            }
+            vipTypeMapper.updateType(vipTypeForm.getId(),vipTypeForm.getName(),vipTypeForm.getDescription(),vipTypeForm.getPrice(),vipTypeForm.getAmount(),vipTypeForm.getDiscount());
+            return ResponseVO.buildSuccess(new VIPTypeVO(vipTypeMapper.selectTypeById(vipTypeForm.getId())));
+        }catch (Exception e) {
             e.printStackTrace();
             return ResponseVO.buildFailure("失败");
         }
