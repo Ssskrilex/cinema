@@ -25,11 +25,10 @@
         on schedule.id = schedule_id group by user_id
     </select>
 
-    <select id="selectAudiencePrice" resultType="com.example.cinema.po.AudiencePrice">
-        select user_id as userId, sum(fare) as totalPrice from schedule right join
-        (select * from ticket where schedule_id in
-        (select id from schedule where start_time between #{date} and #{nextDate}) and state = 1) t
-        on schedule.id = schedule_id group by user_id
+    <select id="selectDateAudience" resultType="com.example.cinema.po.DateAudience">
+        select id as movieId, count(user_id) as audienceNum from ticket
+          (select id from ticket where start_time between #{date} and #{nextDate})
+        group by id
     </select>
 
     <select id="selectAllHall" resultType="com.example.cinema.po.Hall">
