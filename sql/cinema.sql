@@ -342,6 +342,35 @@ INSERT INTO `vip_card` VALUES (1,15,375,'2019-04-21 13:54:38'),(2,12,660,'2019-0
 UNLOCK TABLES;
 
 --
+-- Table structure for table `view`
+--
+
+DROP TABLE IF EXISTS `VIPType`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `VIPType` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `price` double NOT NULL,
+  `amount` double NOT NULL,
+  `discount` double NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `view`
+--
+
+LOCK TABLES `VIPType` WRITE;
+/*!40000 ALTER TABLE `VIPType` DISABLE KEYS */;
+INSERT INTO `VIPType` VALUES (1,7);
+/*!40000 ALTER TABLE `VIPType` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+--
 -- Dumping events for database 'cinema'
 --
 
