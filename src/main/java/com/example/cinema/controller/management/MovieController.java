@@ -76,7 +76,10 @@ public class MovieController {
         return movieService.updateMovie(updateMovieForm);
     }
 
-
+    @RequestMapping(value = "/movie/delete/{id}",method = RequestMethod.GET)
+    public ResponseVO deleteMovie(@PathVariable int id){
+        return movieService.deleteMovie(id);
+    }
 
 
 }

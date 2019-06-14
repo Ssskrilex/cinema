@@ -97,10 +97,82 @@ $(document).ready(function(){
 
     // admin界面才有
     $("#modify-btn").click(function () {
-       alert('交给你们啦，修改时需要在对应html文件添加表单然后获取用户输入，提交给后端，别忘记对用户输入进行验证。（可参照添加电影&添加排片&修改排片）');
+        getRequest(
+            '/movie/'+movieId + '/' + userId,
+            function(res){
+                var movie = res.content;
+                $('#movie-name-input').val(movie.name);
+                $('#movie-date-input').val(new Date(movie.startDate).toLocaleDateString());
+                $('#movie-img-input').val(movie.posterUrl);
+                $('#movie-description-input').val(movie.description);
+                $('#movie-type-input').val(movie.type);
+                $('#movie-length-input').val(movie.length);
+                $('#movie-country-input').val(movie.country);
+                $('#movie-star-input').val(movie.starring);
+                $('#movie-director-input').val(movie.director);
+                $('#movie-writer-input').val(movie.screenWriter);
+                $('#movie-language-input').val(movie.language);            },
+            function (error) {
+                alert(error);
+            }
+        );
+       //alert('交给你们啦，修改时需要在对应html文件添加表单然后获取用户输入，提交给后端，别忘记对用户输入进行验证。（可参照添加电影&添加排片&修改排片）');
     });
     $("#delete-btn").click(function () {
-        alert('交给你们啦，下架别忘记需要一个确认提示框，也别忘记下架之后要对用户有所提示哦');
+        //alert('交给你们啦，下架别忘记需要一个确认提示框，也别忘记下架之后要对用户有所提示哦');
+        confirm('确认要下架电影吗？') && getRequest('/movie/delete/'+movieId,null,function (res) {
+            window.location.href='/admin/movie/manage';
+        });
     });
 
+    $("#movie-form-btn").click(function () {
+        var formData = getMovieForm();
+        if(!validateMovieForm(formData)) {
+            return;
+        }
+        postRequest(
+            '/movie/update',
+            formData,
+            function (res) {
+                getMovie();
+                $("#movieModal").modal('hide');
+            },
+            function (error) {
+                alert(error);
+            });
+    });
+
+    function getMovieForm() {
+        return {
+            id: movieId,
+            name: $('#movie-name-input').val(),
+            startDate: $('#movie-date-input').val(),
+            posterUrl: $('#movie-img-input').val(),
+            description: $('#movie-description-input').val(),
+            type: $('#movie-type-input').val(),
+            length: $('#movie-length-input').val(),
+            country: $('#movie-country-input').val(),
+            starring: $('#movie-star-input').val(),
+            director: $('#movie-director-input').val(),
+            screenWriter: $('#movie-writer-input').val(),
+            language: $('#movie-language-input').val()
+        };
+    }
+
+    function validateMovieForm(data) {
+        var isValidate = true;
+        if(!data.name) {
+            isValidate = false;
+            $('#movie-name-input').parent('.form-group').addClass('has-error');
+        }
+        if(!data.posterUrl) {
+            isValidate = false;
+            $('#movie-img-input').parent('.form-group').addClass('has-error');
+        }
+        if(!data.startDate) {
+            isValidate = false;
+            $('#movie-date-input').parent('.form-group').addClass('has-error');
+        }
+        return isValidate;
+    }
 });

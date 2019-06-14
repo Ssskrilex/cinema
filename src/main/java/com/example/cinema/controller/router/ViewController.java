@@ -51,7 +51,7 @@ public class ViewController {
     }
 
     @RequestMapping(value = "/admin/vipDetail")
-    public String getAdminYipDetail(@RequestParam int id){
+    public String getAdminVipDetail(@RequestParam int id){
         return "adminVipDetail";
     }
 

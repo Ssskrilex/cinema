@@ -2,7 +2,6 @@ $(document).ready(function(){
 
     var movieId = parseInt(window.location.href.split('?')[1].split('&')[0].split('=')[1]);
     var userId = sessionStorage.getItem('id');
-    var isLike = false;
 
     getType();
     /*if(sessionStorage.getItem('role') === 'admin')
@@ -51,10 +50,9 @@ $(document).ready(function(){
 
     function getType() {
         getRequest(
-            '/movie/'+movieId + '/' + userId,
+            '/vip/'+movieId + '/' + userId,
             function(res){
                 var data = res.content;
-                isLike = data.islike;
                 repaintMovieDetail(data);
             },
             function (error) {
@@ -63,25 +61,16 @@ $(document).ready(function(){
         );
     }
 
-    function repaintMovieDetail(movie) {
-        !isLike ? $('.icon-heart').removeClass('error-text') : $('.icon-heart').addClass('error-text');
-        $('#like-btn span').text(isLike ? ' 已想看' : ' 想 看');
-        $('#movie-img').attr('src',movie.posterUrl);
-        $('#movie-name').text(movie.name);
-        $('#order-movie-name').text(movie.name);
-        $('#movie-description').text(movie.description);
-        $('#movie-startDate').text(new Date(movie.startDate).toLocaleDateString());
-        $('#movie-type').text(movie.type);
-        $('#movie-country').text(movie.country);
-        $('#movie-language').text(movie.language);
-        $('#movie-director').text(movie.director);
-        $('#movie-starring').text(movie.starring);
-        $('#movie-writer').text(movie.screenWriter);
-        $('#movie-length').text(movie.length);
+    function repaintMovieDetail(vip) {
+        $('#name').text(vip.name);
+        $('#description').text(vip.description);
+        $('#price').text(new Date(vip.price));
+        $('#amount').text(vip.amount);
+        $('#discount').text(vip.discount);
     }
 
     // user界面才有
-    $('#like-btn').click(function () {
+    /*$('#like-btn').click(function () {
         var url = isLike ?'/movie/'+ movieId +'/unlike?userId='+ userId :'/movie/'+ movieId +'/like?userId='+ userId;
         postRequest(
             url,
@@ -93,7 +82,7 @@ $(document).ready(function(){
             function (error) {
                 alert(error);
             });
-    });
+    });*/
 
     // admin界面才有
     $("#modify-btn").click(function () {

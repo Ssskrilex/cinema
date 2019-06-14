@@ -50,4 +50,8 @@ public class VIPCardController {
         return vipService.getType(typeId)
     }*/
 
+    @GetMapping("/vip/{id}/{userId}")
+    public ResponseVO getTypeById(@PathVariable int id,@PathVariable int userId){
+        return vipService.getTypeById(id);
+    }
 }
