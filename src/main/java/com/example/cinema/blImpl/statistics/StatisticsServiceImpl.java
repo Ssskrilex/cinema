@@ -106,8 +106,23 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     @Override
     public ResponseVO getPopularMovies(int days, int movieNum) {
-        //要求见接口说明
-        return null;
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date today = simpleDateFormat.parse(simpleDateFormat.format(new Date()));
+            Date startDate = getNumDayAfterDate(today, -days);
+            List<MovieTotalBoxOffice> movieboxs = statisticsMapper.selectMoviepopular(startDate,today);
+            List<Integer> movielist = new ArrayList<>();
+            for(MovieTotalBoxOffice m :movieboxs){
+                movielist.add(m.getMovieId());
+            }
+            return ResponseVO.buildSuccess(movielist);
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseVO.buildFailure("失败");
+        }
+
     }
 
 

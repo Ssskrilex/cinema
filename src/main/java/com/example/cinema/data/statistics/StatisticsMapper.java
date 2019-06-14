@@ -47,4 +47,10 @@ public interface StatisticsMapper {
      * @return
      */
     List<Hall> selectAllHall();
+
+    /**
+     * 查询所有电影的最近票房（包括已经下架的，降序排列）
+     * @return
+     */
+    List<MovieTotalBoxOffice> selectMoviepopular(@Param("beforeDate") Date beforeDate, @Param("date") Date date);
 }
