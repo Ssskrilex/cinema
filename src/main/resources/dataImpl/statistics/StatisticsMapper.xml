@@ -24,4 +24,15 @@
               (select id from schedule where start_time between #{date} and #{nextDate}) and state = 1) t
         on schedule.id = schedule_id group by user_id
     </select>
+
+    <select id="selectAudiencePrice" resultType="com.example.cinema.po.AudiencePrice">
+        select user_id as userId, sum(fare) as totalPrice from schedule right join
+        (select * from ticket where schedule_id in
+        (select id from schedule where start_time between #{date} and #{nextDate}) and state = 1) t
+        on schedule.id = schedule_id group by user_id
+    </select>
+
+    <select id="selectAllHall" resultType="com.example.cinema.po.Hall">
+        select * from hall
+    </select>
 </mapper>

@@ -2,13 +2,8 @@ package com.example.cinema.blImpl.statistics;
 
 import com.example.cinema.bl.statistics.StatisticsService;
 import com.example.cinema.data.statistics.StatisticsMapper;
-import com.example.cinema.po.AudiencePrice;
-import com.example.cinema.po.MovieScheduleTime;
-import com.example.cinema.po.MovieTotalBoxOffice;
-import com.example.cinema.vo.AudiencePriceVO;
-import com.example.cinema.vo.MovieScheduleTimeVO;
-import com.example.cinema.vo.MovieTotalBoxOfficeVO;
-import com.example.cinema.vo.ResponseVO;
+import com.example.cinema.po.*;
+import com.example.cinema.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -80,8 +75,33 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     @Override
     public ResponseVO getMoviePlacingRateByDate(Date date) {
-        //要求见接口说明
-        return null;
+        try {
+            List<Hall> hallList = statisticsMapper.selectAllHall();
+            int allSeats = 0;
+            for(int i = 0; i < hallList.size(); i++){
+                allSeats = allSeats + hallList.get(i).getColumn()*hallList.get(i).getRow();
+            }
+            List<DateAudience> AudienceNumList = statisticsMapper.selectDateAudience(date, getNumDayAfterDate(date,1));
+            List<MovieScheduleTime> allMovieScheduleTime = statisticsMapper.selectMovieScheduleTimes(date, getNumDayAfterDate(date,1));
+            List<PlacingRateVO> PlacingRateVOList = null;
+            PlacingRateVO placingRateVO = new PlacingRateVO();
+            for(int i = 0; i < AudienceNumList.size(); i++){
+                for(int j = 0; j < allMovieScheduleTime.size(); j++){
+                    if(AudienceNumList.get(i).getMovieId().equals(allMovieScheduleTime.get(j).getMovieId())){
+                        placingRateVO.setMovieName(allMovieScheduleTime.get(j).getName());
+                        placingRateVO.setDate(date);
+                        double placingRate = AudienceNumList.get(i).getAudienceNum()/allMovieScheduleTime.get(j).getTime()/allSeats;
+                        placingRateVO.setMoviePlacingRate(placingRate);
+                        PlacingRateVOList.add(placingRateVO);
+                    }
+                }
+            }
+            return ResponseVO.buildSuccess(PlacingRateVOList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("失败");
+        }
+
     }
 
     @Override

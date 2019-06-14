@@ -222,7 +222,9 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public ResponseVO cancelTicket(List<Integer> id) {
         try {
-            ticketMapper.updateTicketState(id, 2);
+            for(int i = 0; i < id.size(); i++) {
+                ticketMapper.updateTicketState(id.get(i), 2);
+            }
             return ResponseVO.buildSuccess("订单已失效");
         } catch (Exception e) {
             e.printStackTrace();
