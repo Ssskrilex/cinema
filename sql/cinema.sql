@@ -365,8 +365,35 @@ CREATE TABLE `VIPType` (
 
 LOCK TABLES `VIPType` WRITE;
 /*!40000 ALTER TABLE `VIPType` DISABLE KEYS */;
-INSERT INTO `VIPType` VALUES (1,7);
+INSERT INTO `VIPType` VALUES (1,'ceshi','用来测试的',1,1,1);
 /*!40000 ALTER TABLE `VIPType` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `refund`
+--
+
+DROP TABLE IF EXISTS `refund`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `refund` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `description` varchar(255) NOT NULL,
+  `sid` int(11) NOT NULL,
+  `time` int(11) NOT NULL,
+  `percents` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `view`
+--
+
+LOCK TABLES `refund` WRITE;
+/*!40000 ALTER TABLE `refund` DISABLE KEYS */;
+INSERT INTO `refund` VALUES (1,'j',1,1,1);
+/*!40000 ALTER TABLE `refund` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
