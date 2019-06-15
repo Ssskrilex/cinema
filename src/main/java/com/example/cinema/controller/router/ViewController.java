@@ -50,6 +50,11 @@ public class ViewController {
         return "adminVipManage";
     }
 
+    @RequestMapping(value = "/admin/refund/manage")
+    public String getAdminRefundManage(){
+        return "adminRefundManage";
+    }
+
     @RequestMapping(value = "/admin/vipDetail")
     public String getAdminVipDetail(@RequestParam int id){
         return "adminVipDetail";
@@ -86,5 +91,10 @@ public class ViewController {
     @RequestMapping(value = "/user/member")
     public String getUserMember() {
         return "userMember";
+    }
+
+    @RequestMapping(value = "/user/ticketDetail")
+    public String getUserTicketDetail(@RequestParam int id){
+        return "userTicketDetail";
     }
 }

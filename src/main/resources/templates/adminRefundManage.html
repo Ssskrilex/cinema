@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>会员管理</title>
+    <title>活动管理</title>
     <link rel="stylesheet" type="text/css" href="/css/common.css"/>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.css"/>
     <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css"/>
@@ -12,7 +12,7 @@
     <script src="/js/jquery.js"></script>
     <script src="/js/bootstrap.js"></script>
     <script src="/js/request.js"></script>
-    <script src="/js/adminVipManage.js"></script>
+    <script src="/js/adminRefundManage.js"></script>
 
 </head>
 <body>
@@ -28,64 +28,52 @@
             <li role="presentation"><a href="#"><i class="icon-gift"></i> 活动管理</a></li>
             <li role="presentation"><a href="/admin/cinema/manage"><i class="icon-cogs"></i> 影院管理</a></li>
             <li role="presentation"><a href="/admin/cinema/statistic"><i class="icon-bar-chart"></i> 影院统计</a></li>
-            <li role="presentation" class="active"><a href="/admin/vip/manage"><i class="icon-bar-chart"></i> 会员管理</a></li>
-            <li role="presentation"><a href="/admin/refund/manage"><i class="icon-bar-chart"></i> 退票策略管理</a></li>
+            <li role="presentation"><a href="/admin/vip/manage"><i class="icon-bar-chart"></i> 会员管理</a></li>
+            <li role="presentation" class="active"><a href="/admin/refund/manage"><i class="icon-bar-chart"></i> 退票策略管理</a></li>
         </ul>
     </div>
     <div class="content-container">
         <div class="content-header">
-            <span class="title gray-text">会员管理</span>
-            <button type="button" class="btn btn-primary" data-backdrop="static" data-toggle="modal" data-target="#typeModal"><i class="icon-plus-sign"></i> 发布会员卡</button>
+            <span class="title gray-text">退票策略管理</span>
+            <button type="button" class="btn btn-primary" data-backdrop="static" data-toggle="modal" data-target="#activityModal"><i class="icon-plus-sign"></i> 添加退票策略</button>
         </div>
         <div class="content-activity">
 
         </div>
     </div>
 </div>
-<div class="modal fade" id="typeModal" tabindex="-1" role="dialog" aria-labelledby="movieModalLabel">
+<div class="modal fade" id="activityModal" tabindex="-1" role="dialog" aria-labelledby="movieModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="activytyModalLabel">发布会员卡</h4>
+                <h4 class="modal-title" id="activytyModalLabel">添加退票策略</h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" role="form">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label" for="name"><span class="error-text">*</span>会员卡名称</label>
+                        <label class="col-sm-2 control-label" for="activity-description-input">策略描述</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="name" placeholder="请输入会员卡名称">
+                            <input type="text" class="form-control" id="activity-description-input" placeholder="请输入策略描述">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label" for="description">会员卡描述</label>
+                        <label class="col-sm-2 control-label" for="coupon-target-input"><span class="error-text">*</span>退票时间</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="description" placeholder="请输入会员卡描述">
+                            <input type="number" class="form-control" id="coupon-target-input" placeholder="请输入距开场多少分钟可以退票">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label" for="price"><span class="error-text">*</span>价格</label>
+                        <label class="col-sm-2 control-label" for="coupon-discount-input"><span class="error-text">*</span>退票折价</label>
                         <div class="col-sm-10">
-                            <input type="number" class="form-control" id="price" placeholder="请输入价格">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="amount"><span class="error-text">*</span>需满金额</label>
-                        <div class="col-sm-10">
-                            <input type="number" class="form-control" id="amount" placeholder="请输入充值需满金额">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="discount"><span class="error-text">*</span>优惠金额</label>
-                        <div class="col-sm-10">
-                            <input type="number" class="form-control" id="discount" placeholder="请输入优惠金额">
+                            <input type="number" class="form-control" id="coupon-discount-input" placeholder="请输入退还金额比例">
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary" id="type-form-btn">确认</button>
+                <button type="button" class="btn btn-primary" id="activity-form-btn">确认</button>
             </div>
         </div>
     </div>
