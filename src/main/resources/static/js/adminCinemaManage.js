@@ -32,14 +32,14 @@ $(document).ready(function() {
                 seat+= "<div>"+temp+"</div>";
             }
             var hallDom =
-                "<div class='cinema-hall'>" +
+                "<li id='schedule-"+ hall.id +"' class='schedule-item' data-schedule='"+JSON.stringify(hall)+"'>"+
                 "<div>" +
                 "<span class='cinema-hall-name'>"+ hall.name +"</span>" +
                 "<span class='cinema-hall-size'>"+ hall.column +'*'+ hall.row +"</span>" +
                 "</div>" +
                 "<div class='cinema-seat'>" + seat +
                 "</div>" +
-                "</div>";
+                "</li>";
             hallDomStr+=hallDom;
         });
         $('#hall-card').append(hallDomStr);
@@ -86,5 +86,87 @@ $(document).ready(function() {
                 alert(JSON.stringify(error));
             }
         );
+    });
+
+    $("#movie-form-btn").click(function () {
+        var formData = getMovieForm();
+        /*if(!validateMovieForm(formData)) {
+            return;
+        }*/
+        postRequest(
+            '/hall/add',
+            formData,
+            function (res) {
+                getCinemaHalls();
+                $("#movieModal").modal('hide');
+            },
+            function (error) {
+                alert(error);
+            });
+    });
+
+    function getMovieForm() {
+        return {
+            name: $('#movie-name-input').val(),
+            row: $('#movie-row-input').val(),
+            column: $('#movie-column-input').val()
+        };
+    }
+
+    $(document).on('click','.schedule-item',function (e) {
+        var hall = JSON.parse(e.target.dataset.schedule);
+        $("#schedule-edit-id-input").val(hall.id);
+        $("#schedule-edit-name-input").val(hall.name);
+        $("#schedule-edit-row-input").val(hall.row);
+        $("#schedule-edit-column-input").val(hall.column);
+        $('#scheduleEditModal').modal('show');
+        $('#scheduleEditModal')[0].dataset.scheduleId = hall.id;
+        console.log(hall);
+    });
+
+    $('#schedule-edit-form-btn').click(function () {
+        var form = {
+            id: Number($('#scheduleEditModal')[0].dataset.id),
+            name: $("#schedule-edit-name-input").val(),
+            row: $("#schedule-edit-row-input").val(),
+            column: $("#schedule-edit-column-input").val()
+        };
+        //todo 需要做一下表单验证？
+
+        postRequest(
+            '/hall/update',
+            form,
+            function (res) {
+                if(res.success){
+                    getCinemaHalls();
+                    $("#scheduleEditModal").modal('hide');
+                } else{
+                    alert(res.message);
+                }
+            },
+            function (error) {
+                alert(JSON.stringify(error));
+            }
+        );
+    });
+
+    $("#schedule-edit-remove-btn").click(function () {
+        var r=confirm("确认要删除该影厅信息吗")
+        if (r) {
+            getRequest(
+                '/hall/delete'+$('#scheduleEditModal')[0].dataset.id,
+                function (res) {
+                    if(res.success){
+                        getCinemaHalls();
+                        $("#scheduleEditModal").modal('hide');
+                    } else{
+                        alert(res.message);
+                    }
+                },
+                function (error) {
+                    alert(JSON.stringify(error));
+                }
+            );
+        }
     })
 });
