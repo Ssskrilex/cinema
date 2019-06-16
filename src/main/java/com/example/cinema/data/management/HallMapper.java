@@ -1,6 +1,7 @@
 package com.example.cinema.data.management;
 
 import com.example.cinema.po.Hall;
+import com.example.cinema.vo.HallVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -23,4 +24,10 @@ public interface HallMapper {
      * @return
      */
     Hall selectHallById(@Param("hallId") int hallId);
+
+    int insertOneHall(HallVO hallVO);
+
+    void updateHall(HallVO hallVO);
+
+    void deleteMovie(int id);
 }

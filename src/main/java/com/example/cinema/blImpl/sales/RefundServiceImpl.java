@@ -61,7 +61,7 @@ public class RefundServiceImpl implements RefundService {
     }
 
     @Override
-    public ResponseVO getRefundBySchedule(int sid) {
+    public ResponseVO getRefundByMovieId(int sid) {
         try {
             List<Refund> refund = refundMapper.selectRefundBySchedule(sid);
             List<RefundVO> refundVOS = new ArrayList<>();
@@ -85,4 +85,5 @@ public class RefundServiceImpl implements RefundService {
             return ResponseVO.buildFailure("失败");
         }
     }
+
 }

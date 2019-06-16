@@ -28,11 +28,11 @@ public interface RefundService {
 
 
     /**
-     *根据影厅id查看退票策略
+     *根据电影id查看退票策略
      * @param sid
      * @return List<RefundVO>
      */
-    ResponseVO getRefundBySchedule(int sid);
+    ResponseVO getRefundByMovieId(int sid);
 
     /**
      *删除策略
@@ -40,4 +40,5 @@ public interface RefundService {
      * @return
      */
     ResponseVO deletRefund(int id);
+
 }

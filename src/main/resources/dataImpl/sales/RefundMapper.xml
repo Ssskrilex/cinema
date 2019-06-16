@@ -25,6 +25,8 @@
         delete from refund where id=#{id}
     </delete>
 
+
+
     <resultMap id="Refund" type="com.example.cinema.po.Refund">
         <result column="id" property="id"></result>
         <result column="description" property="description"></result>

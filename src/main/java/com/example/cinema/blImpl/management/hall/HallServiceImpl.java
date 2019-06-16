@@ -31,6 +31,46 @@ public class HallServiceImpl implements HallService, HallServiceForBl {
     }
 
     @Override
+    public ResponseVO addHall(HallVO hallVO) {
+        try {
+            return ResponseVO.buildSuccess(hallMapper.insertOneHall(hallVO));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("失败");
+        }
+    }
+
+    @Override
+    public ResponseVO updateHall(HallVO hallVO) {
+        try {
+            Hall hall = hallMapper.selectHallById(hallVO.getId());
+            if(hall == null){
+                return ResponseVO.buildFailure("没有该影厅");
+            }
+            hallMapper.updateHall(hallVO);
+            return ResponseVO.buildSuccess("更新成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("失败");
+        }
+    }
+
+    @Override
+    public ResponseVO deleteHall(int id) {
+        try {
+            Hall hall = hallMapper.selectHallById(id);
+            if(hall == null){
+                return ResponseVO.buildFailure("没有该影厅");
+            }
+            hallMapper.deleteMovie(id);
+            return ResponseVO.buildSuccess("删除成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("失败");
+        }
+    }
+
+    @Override
     public Hall getHallById(int id) {
         try {
             return hallMapper.selectHallById(id);
