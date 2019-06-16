@@ -1,8 +1,12 @@
 package com.example.cinema.blImpl.sales;
 
 import com.example.cinema.bl.sales.RefundService;
+import com.example.cinema.data.management.ScheduleMapper;
 import com.example.cinema.data.sales.RefundMapper;
+import com.example.cinema.data.sales.TicketMapper;
 import com.example.cinema.po.Refund;
+import com.example.cinema.po.ScheduleItem;
+import com.example.cinema.po.Ticket;
 import com.example.cinema.vo.RefundForm;
 import com.example.cinema.vo.RefundVO;
 import com.example.cinema.vo.ResponseVO;
@@ -10,10 +14,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Date;
 public class RefundServiceImpl implements RefundService {
     @Autowired
     RefundMapper refundMapper;
+    @Autowired
+    TicketMapper ticketMapper;
+    @Autowired
+    ScheduleMapper scheduleMapper;
     @Override
     public ResponseVO addRefund(RefundForm refundForm) {
         try {
@@ -83,6 +91,33 @@ public class RefundServiceImpl implements RefundService {
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseVO.buildFailure("失败");
+        }
+    }
+
+    @Override
+    public ResponseVO doRefund(int tid) {
+        try {
+            Ticket ticket = ticketMapper.selectTicketById(tid);
+            int sid = ticket.getScheduleId();
+            ScheduleItem scheduleItem = scheduleMapper.selectScheduleById(sid);
+            Date now = new Date();
+            long time = (now.getTime() - scheduleItem.getStartTime().getTime())/60000;
+            List<Refund> refunds = refundMapper.selectRefundBySchedule(scheduleItem.getMovieId());
+            int max = 0;
+            for (Refund r :refunds){
+                if(time>=r.getTime() && r.getPercent()>=max){
+                    max = r.getPercent();
+                }
+            }
+            if(max == 0){
+                return ResponseVO.buildSuccess(0);
+            }
+            double refundmoney = scheduleItem.getFare() * max / 100.0;
+            ticketMapper.deleteTicket(tid);
+            return  ResponseVO.buildSuccess(refundmoney);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("退票失败");
         }
     }
 

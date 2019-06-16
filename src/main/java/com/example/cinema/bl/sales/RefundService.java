@@ -41,4 +41,12 @@ public interface RefundService {
      */
     ResponseVO deletRefund(int id);
 
+
+    /**
+     *进行退票
+     * @param tid
+     * @return 退票金额（double）// 当时间太近无法退票时返回0
+     */
+    ResponseVO doRefund(int tid);
+
 }
