@@ -20,6 +20,7 @@ public class StaffUserVO {
         this.status = staff.getStatus();
     }
 
+
     public Integer getId() {
         return id;
     }

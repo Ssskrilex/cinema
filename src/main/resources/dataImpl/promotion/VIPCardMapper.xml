@@ -26,5 +26,21 @@
         update vip_card set balance = #{balance} where id=#{id}
     </update>
 
+    <insert id="chargeRecord" parameterType="com.example.cinema.po.VIPChargeRecord"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into vip_charge_record(vip_id,user_id,amount,record_time)
+                value(#{vipId}, #{userId}, #{amount}, current_timestamp)
+    </insert>
+
+    <select id="selectChargeRecords" resultMap="ChargeRecord">
+        SELECT * from vip_charge_record
+    </select>
+
+    <resultMap id="ChargeRecord" type="com.example.cinema.po.VIPChargeRecord">
+        <result column="user_id" property="userId"></result>
+        <result column="vip_id" property="VIPId"></result>
+        <result column="amount" property="amount"></result>
+        <result column="record_time" property="recordTime"></result>
+    </resultMap>
 
 </mapper>

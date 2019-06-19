@@ -412,6 +412,21 @@ CREATE TABLE `staff` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 
+
+DROP TABLE IF EXISTS `vip_charge_record`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vip_charge_record` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `vip_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `amount` float DEFAULT NULL,
+  `record_time` TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `vip_card_user_id_uindex` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
 --
 -- Dumping events for database 'cinema'
 --

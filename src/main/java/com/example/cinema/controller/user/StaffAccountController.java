@@ -20,26 +20,5 @@ public class StaffAccountController {
     StaffAccountService staffAccountService;
     private final static String ACCOUNT_INFO_ERROR="用户名或密码错误";
 
-    @PostMapping("/login")
-    public ResponseVO login(@RequestBody StaffUserForm staffUserForm, HttpSession session){
-        StaffUserVO staff = staffAccountService.login(staffUserForm);
-        if(session==null){
-            return ResponseVO.buildFailure(ACCOUNT_INFO_ERROR);
-        }
-        //注册session
-        session.setAttribute(InterceptorConfiguration.SESSION_KEY,staffUserForm);
-        return ResponseVO.buildSuccess(user);
-    }
-    @PostMapping("/register")
-    public ResponseVO registerAccount(@RequestBody StaffUserForm staffUserForm){
-        return staffAccountService.registerAccount(staffUserForm);
-    }
-
-    @PostMapping("/logout")
-    public String logOut(HttpSession session){
-        session.removeAttribute(InterceptorConfiguration.SESSION_KEY);
-        return "index";
-    }
-
 
 }

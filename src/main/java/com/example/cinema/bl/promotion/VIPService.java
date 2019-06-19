@@ -30,5 +30,7 @@ public interface VIPService {
 
     ResponseVO getTypeById(int id);
 
+    ResponseVO getChargeRecord(int id);
+
 
 }

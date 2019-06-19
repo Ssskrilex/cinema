@@ -5,9 +5,11 @@
         insert into user(username,password,status)
         values(#{username},#{password},#{status})
     </insert>
-    <select id="getStaffAccountByName" resultMap="Staff">
+
+    <select id="getStaffAccountByName" resultType="com.example.cinema.po.Staff">
         select * from staff where username=#{username}
     </select>
+
     <update id="updateStaffAccount" parameterType="com.example.cinema.po.Staff">
         update staff SET
             `username` = #{username}
@@ -15,10 +17,10 @@
             `status` = #{status}
         where `id` = #{id}
     </update>
+
     <delete id="deleteStaffAccount">
         DELETE FROM staff
         WHERE id = #{id}
     </delete>
-    <resultMap id="Staff" type="com.example.cinema.po.Staff">
-    </resultMap>
+
 </mapper>

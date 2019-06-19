@@ -3,6 +3,7 @@ package com.example.cinema.blImpl.promotion;
 import com.example.cinema.bl.promotion.VIPService;
 import com.example.cinema.data.promotion.VIPCardMapper;
 import com.example.cinema.data.promotion.VIPTypeMapper;
+import com.example.cinema.po.VIPChargeRecord;
 import com.example.cinema.po.VIPType;
 import com.example.cinema.vo.*;
 import com.example.cinema.po.VIPCard;
@@ -66,7 +67,12 @@ public class VIPServiceImpl implements VIPService {
         vipCard.setBalance(vipCard.getBalance() + balance);
         try {
             vipCardMapper.updateCardBalance(vipCardForm.getVipId(), vipCard.getBalance());
-            return ResponseVO.buildSuccess(vipCard);
+            VIPChargeRecord vipChargeRecord = new VIPChargeRecord();
+            vipChargeRecord.setUserId(vipCard.getUserId());
+            vipChargeRecord.setVIPId(vipCard.getId());
+            vipChargeRecord.setAmount(balance);
+            vipCardMapper.chargeRecord(vipChargeRecord);
+            return ResponseVO.buildSuccess();
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseVO.buildFailure("失败");
@@ -148,6 +154,22 @@ public class VIPServiceImpl implements VIPService {
         }
 
     }
+
+    @Override
+    public ResponseVO getChargeRecord(int id){
+        try {
+            List<VIPChargeRecord> recordList = vipCardMapper.selectChargeRecords(id);
+            List<VIPChargeRecordVO> recordVOList = new ArrayList<>();
+            for(VIPChargeRecord record : recordList){
+                recordVOList.add(new VIPChargeRecordVO(record));
+            }
+            return ResponseVO.buildSuccess(recordVOList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("失败");
+        }
+    }
+
 
 
 }

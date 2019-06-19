@@ -52,18 +52,16 @@ public class StaffAccountServiceImpl implements StaffAccountService {
 
     @Override
     public ResponseVO updateAccount(Staff staff){
-        StaffUserVO staffUserVO = new StaffUserVO();
+
         try {
             staffAccountMapper.updateStaffAccount(staff.getId(),
                     staff.getUsername(), staff.getPassword(), staff.getStatus());
-            staffUserVO.setPassword(staff.getPassword());
-            staffUserVO.setUsername(staff.getUsername());
-            staffUserVO.setStatus(staff.getStatus());
+                    return ResponseVO.buildSuccess(new StaffUserVO(staff));
         } catch (Exception e) {
             return ResponseVO.buildFailure("update failed");
         }
 
-        return ResponseVO.buildSuccess(staffUserVO);
+
     }
 
 
