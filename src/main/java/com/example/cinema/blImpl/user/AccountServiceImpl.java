@@ -1,7 +1,9 @@
 package com.example.cinema.blImpl.user;
 
 import com.example.cinema.bl.user.AccountService;
+import com.example.cinema.data.sales.TicketMapper;
 import com.example.cinema.data.user.AccountMapper;
+import com.example.cinema.po.Ticket;
 import com.example.cinema.po.User;
 import com.example.cinema.vo.UserForm;
 import com.example.cinema.vo.ResponseVO;
@@ -18,6 +20,9 @@ public class AccountServiceImpl implements AccountService {
     private final static String ACCOUNT_EXIST = "账号已存在";
     @Autowired
     private AccountMapper accountMapper;
+    @Autowired
+    private TicketMapper ticketMapper;
+    @A
 
     @Override
     public ResponseVO registerAccount(UserForm userForm) {
