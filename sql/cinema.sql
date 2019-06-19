@@ -397,6 +397,21 @@ INSERT INTO `refund` VALUES (1,'j',1,1,1);
 UNLOCK TABLES;
 
 
+DROP TABLE IF EXISTS `staff`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `staff` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `status` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `staff_id_uindex` (`id`),
+  UNIQUE KEY `staff_username_uindex` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+
 --
 -- Dumping events for database 'cinema'
 --
