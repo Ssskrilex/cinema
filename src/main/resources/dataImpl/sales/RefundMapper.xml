@@ -3,7 +3,7 @@
 <mapper namespace="com.example.cinema.data.sales.RefundMapper">
     <insert id="insertRefund" parameterType="com.example.cinema.po.Refund"
             useGeneratedKeys="true" keyProperty="id">
-        insert into refund(description,sid,time,percents)
+        insert into refund(description,sid,time,percent)
         values( #{description},#{sid},#{time},#{percent})
     </insert>
 
@@ -18,7 +18,7 @@
 
 
     <update id="updateRefund">
-        update refund set description = #{description},sid = #{sid},time = #{time},percents = #{percent}  where id=#{id}
+        update refund set description = #{description},sid = #{sid},time = #{time},percent = #{percent}  where id=#{id}
     </update>
 
     <delete id="deleteRefund">

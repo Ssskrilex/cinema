@@ -126,7 +126,7 @@ $(document).ready(function() {
 
     $('#schedule-edit-form-btn').click(function () {
         var form = {
-            id: Number($('#scheduleEditModal')[0].dataset.id),
+            id: Number($('#scheduleEditModal')[0].dataset.scheduleId),
             name: $("#schedule-edit-name-input").val(),
             row: $("#schedule-edit-row-input").val(),
             column: $("#schedule-edit-column-input").val()
@@ -154,7 +154,7 @@ $(document).ready(function() {
         var r=confirm("确认要删除该影厅信息吗")
         if (r) {
             getRequest(
-                '/hall/delete'+$('#scheduleEditModal')[0].dataset.id,
+                '/hall/delete'+$('#scheduleEditModal')[0].dataset.scheduleId,
                 function (res) {
                     if(res.success){
                         getCinemaHalls();

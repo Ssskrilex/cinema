@@ -1,7 +1,7 @@
-package com.example.cinema.controller.promotion;
+package com.example.cinema.controller.sales;
 
-import com.example.cinema.bl.promotion.CouponService;
 import com.example.cinema.bl.sales.RefundService;
+import com.example.cinema.blImpl.sales.RefundServiceImpl;
 import com.example.cinema.vo.RefundForm;
 import com.example.cinema.vo.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +25,16 @@ public class RefundController {
     @PostMapping("/add")
     public ResponseVO addRefund(@RequestBody RefundForm refundForm){
         return refundService.addRefund(refundForm);
+    }
+
+    @PostMapping("/update")
+    public ResponseVO updateRefund(@RequestBody RefundForm refundForm){
+        return refundService.updateRefund(refundForm);
+    }
+
+    @GetMapping("/delete/{id}")
+    public ResponseVO deleteRefund(@PathVariable int id){
+        return refundService.deletRefund(id);
     }
 
 }

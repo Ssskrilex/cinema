@@ -1,9 +1,12 @@
 package com.example.cinema.blImpl.sales;
 
 import com.example.cinema.bl.sales.RefundService;
+import com.example.cinema.bl.sales.TicketService;
+import com.example.cinema.data.management.MovieMapper;
 import com.example.cinema.data.management.ScheduleMapper;
 import com.example.cinema.data.sales.RefundMapper;
 import com.example.cinema.data.sales.TicketMapper;
+import com.example.cinema.po.Movie;
 import com.example.cinema.po.Refund;
 import com.example.cinema.po.ScheduleItem;
 import com.example.cinema.po.Ticket;
@@ -11,10 +14,12 @@ import com.example.cinema.vo.RefundForm;
 import com.example.cinema.vo.RefundVO;
 import com.example.cinema.vo.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
+@Service
 public class RefundServiceImpl implements RefundService {
     @Autowired
     RefundMapper refundMapper;
@@ -22,6 +27,8 @@ public class RefundServiceImpl implements RefundService {
     TicketMapper ticketMapper;
     @Autowired
     ScheduleMapper scheduleMapper;
+    @Autowired
+    MovieMapper movieMapper;
     @Override
     public ResponseVO addRefund(RefundForm refundForm) {
         try {
@@ -120,5 +127,19 @@ public class RefundServiceImpl implements RefundService {
             return ResponseVO.buildFailure("退票失败");
         }
     }
+
+    @Override
+    public ResponseVO getRefunds() {
+        List<RefundVO> ret=new ArrayList<>();
+        List<Movie> list=movieMapper.selectAllMovie();
+        for(Movie movie:list){
+            List<Refund> item =refundMapper.selectRefundBySchedule(movie.getId());
+            for(Refund refund:item){
+                ret.add(new RefundVO(refund));
+            }
+        }
+        return ResponseVO.buildSuccess(ret);
+    }
+
 
 }
