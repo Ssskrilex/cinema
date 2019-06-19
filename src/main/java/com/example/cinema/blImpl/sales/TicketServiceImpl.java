@@ -223,9 +223,9 @@ public class TicketServiceImpl implements TicketService {
     public ResponseVO cancelTicket(List<Integer> id) {
         try {
             for(int i = 0; i < id.size(); i++) {
-                ticketMapper.updateTicketState(id.get(i), 2);
+                ticketMapper.deleteTicket(id.get(i));
             }
-            return ResponseVO.buildSuccess("订单已失效");
+            return ResponseVO.buildSuccess("订单已取消");
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseVO.buildFailure("失败");

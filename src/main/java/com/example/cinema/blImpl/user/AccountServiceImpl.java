@@ -1,15 +1,18 @@
 package com.example.cinema.blImpl.user;
 
 import com.example.cinema.bl.user.AccountService;
+import com.example.cinema.data.promotion.VIPCardMapper;
 import com.example.cinema.data.sales.TicketMapper;
 import com.example.cinema.data.user.AccountMapper;
 import com.example.cinema.po.Ticket;
 import com.example.cinema.po.User;
-import com.example.cinema.vo.UserForm;
-import com.example.cinema.vo.ResponseVO;
-import com.example.cinema.vo.UserVO;
+import com.example.cinema.po.VIPChargeRecord;
+import com.example.cinema.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author huwen
@@ -22,7 +25,9 @@ public class AccountServiceImpl implements AccountService {
     private AccountMapper accountMapper;
     @Autowired
     private TicketMapper ticketMapper;
-    @A
+    @Autowired
+    private VIPCardMapper vipCardMapper;
+
 
     @Override
     public ResponseVO registerAccount(UserForm userForm) {
@@ -43,5 +48,28 @@ public class AccountServiceImpl implements AccountService {
         return new UserVO(user);
     }
 
-
+    @Override
+    public ResponseVO selectExpenseRecord(UserForm userForm){
+        try {
+            List<Ticket> ticketList = ticketMapper.selectTicketByUser(
+                    accountMapper.getAccountByName(userForm.getUsername()).getId());
+            List<VIPChargeRecord> chargeRecordList = vipCardMapper.selectChargeRecords(
+                    accountMapper.getAccountByName(userForm.getUsername()).getId());
+            List<ExpenseRecordVO> recordVOList = new ArrayList<>();
+            for(Ticket ticket : ticketList){
+                ExpenseRecordVO expenseRecordVO = new ExpenseRecordVO();
+                expenseRecordVO.setTicketVO(ticket.getVO());
+                recordVOList.add(expenseRecordVO);
+            }
+            for (VIPChargeRecord vipChargeRecord : chargeRecordList){
+                ExpenseRecordVO expenseRecordVO = new ExpenseRecordVO();
+                expenseRecordVO.setVipChargeRecordVO(new VIPChargeRecordVO(vipChargeRecord));
+                recordVOList.add(expenseRecordVO);
+            }
+            return ResponseVO.buildSuccess(recordVOList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("failure");
+        }
+    }
 }

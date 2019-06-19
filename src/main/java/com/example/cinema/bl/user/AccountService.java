@@ -14,12 +14,18 @@ public interface AccountService {
      * 注册账号
      * @return
      */
-    public ResponseVO registerAccount(UserForm userForm);
+     ResponseVO registerAccount(UserForm userForm);
 
     /**
      * 用户登录，登录成功会将用户信息保存再session中
      * @return
      */
-    public UserVO login(UserForm userForm);
+     UserVO login(UserForm userForm);
+
+    /**
+     * 查询个人消费记录
+     * @return
+     */
+    ResponseVO selectExpenseRecord(UserForm userForm);
 
 }

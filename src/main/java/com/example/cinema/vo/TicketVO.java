@@ -1,5 +1,7 @@
 package com.example.cinema.vo;
 
+import com.example.cinema.po.Ticket;
+
 import java.sql.Timestamp;
 
 /**
@@ -45,6 +47,7 @@ public class TicketVO {
 
     public TicketVO() {
     }
+
 
     public int getId() {
         return id;
