@@ -3,6 +3,8 @@ package com.example.cinema.blImpl.promotion;
 import com.example.cinema.bl.promotion.VIPService;
 import com.example.cinema.data.promotion.VIPCardMapper;
 import com.example.cinema.data.promotion.VIPTypeMapper;
+import com.example.cinema.data.user.AccountMapper;
+import com.example.cinema.po.User;
 import com.example.cinema.po.VIPChargeRecord;
 import com.example.cinema.po.VIPType;
 import com.example.cinema.vo.*;
@@ -23,6 +25,8 @@ public class VIPServiceImpl implements VIPService {
     VIPCardMapper vipCardMapper;
     @Autowired
     VIPTypeMapper vipTypeMapper;
+    @Autowired
+    AccountMapper accountMapper;
 
     @Override
     public ResponseVO addVIPCard(int userId) {
@@ -170,6 +174,30 @@ public class VIPServiceImpl implements VIPService {
         }
     }
 
+    @Override
+    public ResponseVO getMembersByExpenditure(double limit){
+        try {
+            List<User> userList = accountMapper.getAllUser();
+            List<Double> expenditure = new ArrayList<>();
+            for(User user : userList) {
+                List<VIPChargeRecord> chargeRecordList = vipCardMapper.selectChargeRecords(user.getId());
+                double sum = 0;
+                for(VIPChargeRecord vipChargeRecord : chargeRecordList){
+                    sum += vipChargeRecord.getAmount();
+                }
+                expenditure.add(sum-vipCardMapper.selectCardByUserId(user.getId()).getBalance());
+            }
+            List<UserVO> userVOList = new ArrayList<>();
+            for(int i = 0; i < expenditure.size(); i++){
+                if(expenditure.get() > limit)
+                    userVOList.add(new UserVO(userList.get(i)));
+            }
+            return ResponseVO.buildSuccess(userVOList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("failure");
+        }
+    }
 
 
 }

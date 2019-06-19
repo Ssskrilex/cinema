@@ -32,5 +32,6 @@ public interface VIPService {
 
     ResponseVO getChargeRecord(int id);
 
+    ResponseVO getMembersByExpenditure(double limit);
 
 }
