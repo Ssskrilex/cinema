@@ -42,20 +42,57 @@ $(document).ready(function() {
 
 
     function getUsers(){
+        $(".content-activity").html("");
         var userBoxs = [];
         postRequest(
             '/users/beyondamount',
             userAmount,
             function (res) {
                 userBoxs = res.content;
+                var userDomStr = "";
+                userBoxs.forEach(function (userBox) {
+                    // language=HTML
+                    userDomStr+=
+                        "<div class='activity-container'>" +
+                        "    <div class='activity-card card'>" +
+                        "       <div class='activity-line'>" +
+                        "           <li>用户id： </li>"+
+                        "           <span class='title'>"+userBox.id+"</span>" +
+                        "           <li>  用户名： </li>"+
+                        "           <span class='gray-text'>"+userBox.username+"</span>" +
+                        "           <li>  用户消费金额： </li>"+
+                        "           <span class='amount'>"+userBox.amount+"</span>"+
+                        "           <button type='button' class='btn btn-primary' id='give-coupon' onclick='givecoupon("+userBox.id+");'>赠送优惠券</button>"+
+                        "<script>function givecoupon(userid){\n" +
+                        "        var data ={}\n" +
+                        "        data.userId = userid;\n" +
+                        "        data.couponId = parseInt($(\"#hall-select option:selected\").prop('value'))\n" +
+                        "        console.log(data);\n" +
+                        "        postRequest(\n" +
+                        "            '/coupon/give',\n" +
+                        "            data,\n" +
+                        "            function (res) {\n" +
+                        "                alert('赠送成功')\n" +
+                        "            },\n" +
+                        "            function (error) {\n" +
+                        "                alert('赠送失败')\n" +
+                        "            }\n" +
+                        "        )\n" +
+                        "    }</script>"+
+                        "       </div>" +
+                        "    </div>" +
+                        "</div>";
+                });
+                $(".content-activity").append(userDomStr);
 
             },
             function (error) {
-            alert(JSON.stringify(error));
-        }
+                alert(JSON.stringify(error));
+            }
 
         )
     }
+
 
 
 
