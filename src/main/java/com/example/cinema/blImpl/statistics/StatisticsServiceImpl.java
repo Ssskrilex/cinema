@@ -89,7 +89,6 @@ public class StatisticsServiceImpl implements StatisticsService {
                 for(int j = 0; j < allMovieScheduleTime.size(); j++){
                     if(AudienceNumList.get(i).getMovieId().equals(allMovieScheduleTime.get(j).getMovieId())){
                         placingRateVO.setMovieName(allMovieScheduleTime.get(j).getName());
-                        placingRateVO.setDate(date);
                         double placingRate = AudienceNumList.get(i).getAudienceNum()/allMovieScheduleTime.get(j).getTime()/allSeats;
                         placingRateVO.setMoviePlacingRate(placingRate);
                         PlacingRateVOList.add(placingRateVO);

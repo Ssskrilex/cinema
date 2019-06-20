@@ -7,18 +7,12 @@ import java.util.Date;
  * @date 2019/4/21 3:00 PM
  */
 public class PlacingRateVO {
-    private Date date;
 
     private Double moviePlacingRate;
 
     private String movieName;
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
+    public PlacingRateVO() {
     }
 
     public Double getMoviePlacingRate() {

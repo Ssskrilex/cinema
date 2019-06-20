@@ -150,7 +150,43 @@ $(document).ready(function() {
     }
 
     function getPlacingRate() {
-        // todo
+        getRequest(
+            '/statistics/PlacingRate',
+            function (res) {
+                var data = res.content || [];
+                var tableData = data.map(function (item) {
+                    return {
+                        value: item.moviePlacingRate,
+                        name: item.movieName
+                    };
+                });
+                var nameList = data.map(function (item) {
+                    return item.movieName;
+                });
+                var option = {
+                    title : {
+                        text: '当日上座率',
+                        subtext: new Date().toLocaleDateString(),
+                        x:'center'
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: nameList
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [{
+                        data: tableData,
+                        type: 'bar'
+                    }]
+                };
+                var scheduleRateChart = echarts.init($("#place-rate-container")[0]);
+                scheduleRateChart.setOption(option);
+            },
+            function (error) {
+                alert(JSON.stringify(error));
+            });
     }
 
     function getPolularMovie() {
