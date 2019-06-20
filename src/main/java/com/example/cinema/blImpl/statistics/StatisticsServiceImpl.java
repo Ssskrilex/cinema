@@ -1,6 +1,7 @@
 package com.example.cinema.blImpl.statistics;
 
 import com.example.cinema.bl.statistics.StatisticsService;
+import com.example.cinema.data.management.MovieMapper;
 import com.example.cinema.data.statistics.StatisticsMapper;
 import com.example.cinema.po.*;
 import com.example.cinema.vo.*;
@@ -21,6 +22,8 @@ import java.util.List;
 public class StatisticsServiceImpl implements StatisticsService {
     @Autowired
     private StatisticsMapper statisticsMapper;
+    @Autowired
+    private MovieMapper movieMapper;
     @Override
     public ResponseVO getScheduleRateByDate(Date date) {
         try{
@@ -117,10 +120,15 @@ public class StatisticsServiceImpl implements StatisticsService {
             Date today = simpleDateFormat.parse(simpleDateFormat.format(new Date()));
             Date startDate = getNumDayAfterDate(today, -days);
             List<MovieTotalBoxOffice> movieboxs = statisticsMapper.selectMoviepopular(startDate,today);
-            List<Integer> movielist = new ArrayList<>();
+            List<MovieVO> movielist = new ArrayList<>();
+            List<Integer> moneys = new ArrayList<>();
             for(MovieTotalBoxOffice m :movieboxs){
-                movielist.add(m.getMovieId());
+                movielist.add(new MovieVO(movieMapper.selectMovieById(m.getMovieId())));
+                moneys.add(m.getBoxOffice());
             }
+            PopularVO result = new PopularVO();
+            result.setMovieVOList(movielist);
+
             return ResponseVO.buildSuccess(movielist);
 
 
