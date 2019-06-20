@@ -17,9 +17,9 @@ public class RefundController {
     @Autowired
     RefundService refundService;
 
-    @GetMapping("/get")
-    public ResponseVO getRefunds(){
-        return refundService.getRefunds();
+    @GetMapping("/get/{movieId}")
+    public ResponseVO getRefundByMovieId(@PathVariable int movieId){
+        return refundService.getRefundByMovieId(movieId);
     }
 
     @PostMapping("/add")

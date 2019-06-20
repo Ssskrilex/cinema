@@ -56,11 +56,15 @@
                 <div class="movie-operations">
                     <button type="button" class="btn btn-primary" data-backdrop="static" data-toggle="modal" data-target="#movieModal" id="modify-btn"><i class="icon-plus-sign"></i> 修改电影</button>
                     <button type="button" class="btn btn-danger" id="delete-btn"><span>下 架</span></button>
+                    <button type="button" class="btn btn-primary" data-backdrop="static" data-toggle="modal" data-target="#activityModal"><i class="icon-plus-sign"></i> 添加退票策略</button>
                 </div>
             </div>
         </div>
         <div class="statistic-container card">
            <div id="like-date-chart" style="width: 800px;height:500px;"></div>
+        </div>
+        <div class="statistic-container card">
+            <div class="content-activity"></div>
         </div>
     </div>
 </div>
@@ -145,6 +149,87 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                 <button type="button" class="btn btn-primary" id="movie-form-btn">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="activityModal" tabindex="-1" role="dialog" aria-labelledby="movieModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="activytyModalLabel">添加退票策略</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="activity-description-input">策略描述</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="activity-description-input" placeholder="请输入策略描述">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="coupon-target-input"><span class="error-text">*</span>退票时间</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" id="coupon-target-input" placeholder="请输入距开场多少分钟可以退票">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="coupon-discount-input"><span class="error-text">*</span>退票折价</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" id="coupon-discount-input" placeholder="请输入退还金额比例">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="activity-form-btn">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="scheduleEditModal" tabindex="-1" role="dialog" aria-labelledby="movieModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">修改策略</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="schedule-edit-id-input"><span class="error-text">*</span>ID</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="schedule-edit-id-input" readonly>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="schedule-edit-description-input"><span class="error-text">*</span>适用电影</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="schedule-edit-description-input" placeholder="请输入电影id">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="schedule-edit-row-input"><span class="error-text">*</span>距离开场时间</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="schedule-edit-row-input" placeholder="请输入距离开场多久可以退票">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="schedule-edit-column-input"><span class="error-text">*</span>退票比例</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="schedule-edit-column-input" placeholder="请输入退票比例">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="schedule-edit-remove-btn">删除</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="schedule-edit-form-btn">确认</button>
             </div>
         </div>
     </div>
