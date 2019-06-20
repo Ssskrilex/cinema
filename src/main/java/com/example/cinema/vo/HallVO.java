@@ -11,13 +11,15 @@ public class HallVO {
     private String name;
     private Integer row;
     private Integer column;
-
+    public HallVO(){
+    }
     public HallVO(Hall hall){
         this.id = hall.getId();
         this.name = hall.getName();
         this.row = hall.getRow();
         this.column = hall.getColumn();
     }
+
 
     public Integer getId() {
         return id;
