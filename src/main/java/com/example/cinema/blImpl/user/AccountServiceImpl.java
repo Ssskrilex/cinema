@@ -6,6 +6,7 @@ import com.example.cinema.data.sales.TicketMapper;
 import com.example.cinema.data.user.AccountMapper;
 import com.example.cinema.po.Ticket;
 import com.example.cinema.po.User;
+import com.example.cinema.po.UserBox;
 import com.example.cinema.po.VIPChargeRecord;
 import com.example.cinema.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,5 +72,16 @@ public class AccountServiceImpl implements AccountService {
             e.printStackTrace();
             return ResponseVO.buildFailure("failure");
         }
+    }
+
+    @Override
+    public ResponseVO selectUserByAmount(int amount) {
+        try {
+            List<UserBox> users = accountMapper.getUserByamount(amount);
+            return ResponseVO.buildSuccess(users);
+        } catch (Exception e) {
+            return ResponseVO.buildFailure(ACCOUNT_EXIST);
+        }
+
     }
 }

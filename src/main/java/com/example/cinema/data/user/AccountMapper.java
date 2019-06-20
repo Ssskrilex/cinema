@@ -1,6 +1,7 @@
 package com.example.cinema.data.user;
 
 import com.example.cinema.po.User;
+import com.example.cinema.po.UserBox;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -33,4 +34,6 @@ public interface AccountMapper {
      * @return
      */
     public List<User> getAllUser();
+
+    List<UserBox> getUserByamount(@Param("amount") int amount);
 }

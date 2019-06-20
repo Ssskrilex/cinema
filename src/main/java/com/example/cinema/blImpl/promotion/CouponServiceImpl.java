@@ -8,6 +8,9 @@ import com.example.cinema.vo.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by liying on 2019/4/17.
  */
@@ -55,5 +58,18 @@ public class CouponServiceImpl implements CouponService {
             return ResponseVO.buildFailure("失败");
         }
 
+    }
+
+    @Override
+    public ResponseVO getAllCoupons() {
+
+        try {
+            List<Coupon> Coupons = couponMapper.selectAll();
+
+            return ResponseVO.buildSuccess(Coupons);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("失败");
+        }
     }
 }

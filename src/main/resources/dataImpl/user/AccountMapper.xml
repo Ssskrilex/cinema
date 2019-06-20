@@ -14,6 +14,18 @@
         select * from user
     </select>
 
+    <select id="getUserByamount" resultMap="UserBox">
+        select id , username , amount from user join
+        (select t.user_id,sum(fare) as amount from
+        (select ticket.user_id,schedule.fare from ticket inner join schedule on ticket.schedule_id = schedule.id) t
+        group by user_id) f
+        where amount &gt;= #{amount}
+    </select>
+
+
+
     <resultMap id="User" type="com.example.cinema.po.User">
+    </resultMap>
+    <resultMap id="UserBox" type="com.example.cinema.po.UserBox">
     </resultMap>
 </mapper>

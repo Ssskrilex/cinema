@@ -28,4 +28,7 @@ public interface AccountService {
      */
     ResponseVO selectExpenseRecord(UserForm userForm);
 
+
+    ResponseVO selectUserByAmount(int amount);
+
 }

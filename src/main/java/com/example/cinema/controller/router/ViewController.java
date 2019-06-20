@@ -50,9 +50,9 @@ public class ViewController {
         return "adminVipManage";
     }
 
-    @RequestMapping(value = "/admin/refund/manage")
-    public String getAdminRefundManage(){
-        return "adminRefundManage";
+    @RequestMapping(value = "/admin/coupon/manage")
+    public String getAdminCouponManage(){
+        return "adminCouponManage";
     }
 
     @RequestMapping(value = "/admin/vipDetail")
