@@ -49,4 +49,5 @@ public interface RefundService {
      */
     ResponseVO doRefund(int tid);
 
+    ResponseVO getRefunds();
 }
