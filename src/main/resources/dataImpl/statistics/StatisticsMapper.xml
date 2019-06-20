@@ -26,9 +26,11 @@
     </select>
 
     <select id="selectDateAudience" resultType="com.example.cinema.po.DateAudience">
-        select id as movieId, count(user_id) as audienceNum from ticket
-          (select id from ticket where start_time between #{date} and #{nextDate})
-        group by id
+        select movie_id as movieId, count(*) as audienceNum,name from
+            ()
+          (select * from ticket where time between #{date} and #{nextDate}) t,
+            (select * from schedule where start_time = date) s,
+            movie where t.schedule_id = s.id group by movieId
     </select>
 
     <select id="selectMoviepopular" resultType="com.example.cinema.po.MovieTotalBoxOffice">

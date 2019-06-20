@@ -81,8 +81,15 @@ public class StatisticsServiceImpl implements StatisticsService {
             for(int i = 0; i < hallList.size(); i++){
                 allSeats = allSeats + hallList.get(i).getColumn()*hallList.get(i).getRow();
             }
-            List<DateAudience> AudienceNumList = statisticsMapper.selectDateAudience(date, getNumDayAfterDate(date,1));
-            List<MovieScheduleTime> allMovieScheduleTime = statisticsMapper.selectMovieScheduleTimes(date, getNumDayAfterDate(date,1));
+            Date requireDate = date;
+            if(requireDate == null){
+                requireDate = new Date();
+            }
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            requireDate = simpleDateFormat.parse(simpleDateFormat.format(requireDate));
+            Date nextDate = getNumDayAfterDate(requireDate, 1);
+            List<DateAudience> AudienceNumList = statisticsMapper.selectDateAudience(requireDate, nextDate);
+            List<MovieScheduleTime> allMovieScheduleTime = statisticsMapper.selectMovieScheduleTimes(requireDate, nextDate);
             List<PlacingRateVO> PlacingRateVOList = null;
             PlacingRateVO placingRateVO = new PlacingRateVO();
             for(int i = 0; i < AudienceNumList.size(); i++){
