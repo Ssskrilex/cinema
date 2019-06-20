@@ -4,12 +4,12 @@
 
     <insert id="insertOneHall" parameterType="com.example.cinema.vo.HallVO"
             useGeneratedKeys="true" keyProperty="id">
-        insert into hall(name, row,column)
+        insert into hall(name, row,`column`)
         values(#{name}, #{row}, #{column})
     </insert>
 
     <update id="updateHall" parameterType="com.example.cinema.vo.HallVO">
-        update hall set name = #{name}, row = #{row}, column = #{column}
+        update hall set name = #{name}, row = #{row}, `column` = #{column}
         where id = #{id}
     </update>
 
