@@ -189,7 +189,7 @@ public class VIPServiceImpl implements VIPService {
             }
             List<UserVO> userVOList = new ArrayList<>();
             for(int i = 0; i < expenditure.size(); i++){
-                if(expenditure.get() > limit)
+                if(expenditure.get(i) > limit)
                     userVOList.add(new UserVO(userList.get(i)));
             }
             return ResponseVO.buildSuccess(userVOList);
