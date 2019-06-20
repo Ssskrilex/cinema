@@ -32,7 +32,7 @@
         <result column="description" property="description"></result>
         <result column="sid" property="sid"></result>
         <result column="time" property="time"></result>
-        <result column="percents" property="percents"></result>
+        <result column="percent" property="percent"></result>
     </resultMap>
 
 
