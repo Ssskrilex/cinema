@@ -6,8 +6,8 @@
         values(#{username},#{password},#{status})
     </insert>
 
-    <select id="getStaffAccountByName" resultType="com.example.cinema.po.Staff">
-        select * from staff where username=#{username}
+    <select id="getStaffAccount" resultMap="StaffAccount">
+        select * from staff
     </select>
 
     <update id="updateStaffAccount" parameterType="com.example.cinema.po.Staff">
@@ -22,5 +22,8 @@
         DELETE FROM staff
         WHERE id = #{id}
     </delete>
+
+    <resultMap id="StaffAccount" type="com.example.cinema.po.Staff">
+    </resultMap>
 
 </mapper>

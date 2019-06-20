@@ -9,6 +9,9 @@ import com.example.cinema.vo.StaffUserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author huwen
  * @date 2019/3/23
@@ -32,18 +35,24 @@ public class StaffAccountServiceImpl implements StaffAccountService {
 
 
     @Override
-    public StaffUserVO login(StaffUserForm staffUserForm) {
-        Staff staff = staffAccountMapper.getStaffAccountByName(staffUserForm.getUsername());
-        if (null == staff || !staff.getPassword().equals(staffUserForm.getPassword())) {
-            return null;
+    public ResponseVO selectStaffList() {
+        try {
+            List<Staff> staffList = staffAccountMapper.getStaffAccount();
+            List<StaffUserVO> staffUserVOList = new ArrayList<>();
+            for(Staff staff : staffList){
+                staffUserVOList.add(new StaffUserVO(staff));
+            }
+            return ResponseVO.buildSuccess(staffUserVOList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return  ResponseVO.buildFailure("failure");
         }
-        return new StaffUserVO(staff);
     }
 
     @Override
-    public ResponseVO deleteAccount(Staff staff){
+    public ResponseVO deleteAccount(StaffUserVO staffUserVO){
         try {
-            staffAccountMapper.deleteStaffAccount(staff.getId());
+            staffAccountMapper.deleteStaffAccount(staffUserVO.getId());
         } catch (Exception e) {
             return ResponseVO.buildFailure("delete failed");
         }
@@ -51,12 +60,12 @@ public class StaffAccountServiceImpl implements StaffAccountService {
     }
 
     @Override
-    public ResponseVO updateAccount(Staff staff){
+    public ResponseVO updateAccount(StaffUserVO staffUserVO){
 
         try {
-            staffAccountMapper.updateStaffAccount(staff.getId(),
-                    staff.getUsername(), staff.getPassword(), staff.getStatus());
-                    return ResponseVO.buildSuccess(new StaffUserVO(staff));
+            staffAccountMapper.updateStaffAccount(staffUserVO.getId(),
+                    staffUserVO.getUsername(), staffUserVO.getPassword(), staffUserVO.getStatus());
+                    return ResponseVO.buildSuccess(staffUserVO);
         } catch (Exception e) {
             return ResponseVO.buildFailure("update failed");
         }

@@ -7,26 +7,26 @@ import com.example.cinema.vo.StaffUserVO;
 
 public interface StaffAccountService {
     /**
-     * 注册员工账号
+     * 注册员工信息
      * @return
      */
     ResponseVO registerAccount(StaffUserForm staffUserForm);
 
     /**
-     * 影院员工登录，登录成功会将用户信息保存再session中
+     * 影院员工列表
      * @return
      */
-    StaffUserVO login(StaffUserForm staffUserForm);
+    ResponseVO selectStaffList();
 
     /**
-     * 员工账号删除
+     * 员工信息删除
      * @return
      */
-    ResponseVO deleteAccount(Staff staff);
+    ResponseVO deleteAccount(StaffUserVO staffUserVO);
 
     /**
      * 员工信息修改
      * @return
      */
-    ResponseVO updateAccount(Staff staff);
+    ResponseVO updateAccount(StaffUserVO staffUserVO);
 }

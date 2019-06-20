@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Mapper
 public interface StaffAccountMapper {
     /**
@@ -17,11 +19,10 @@ public interface StaffAccountMapper {
     public int createNewStaffAccount(@Param("username") String username, @Param("password") String password, @Param("status") String status);
 
     /**
-     * 根据用户名查找账号
-     * @param username
+     * 查找账号列表
      * @return
      */
-    public Staff getStaffAccountByName(@Param("username") String username);
+    public List<Staff> getStaffAccount();
 
     /**
      * 根据用户id更新账号
